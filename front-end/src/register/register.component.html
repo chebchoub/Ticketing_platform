@@ -1,0 +1,62 @@
+<body>
+  <form method="get" (ngSubmit)="register()" #registrationForm="ngForm" id="login-form" class="login-form" autocomplete="off" role="main">
+    <h1 class="a11y-hidden">Register Form</h1>
+    <div class="form-row">
+      <div class="form-column">
+        <label class="label-email">
+          <input type="text" class="text" name="First Name" placeholder="First Name"  [(ngModel)]="nom" required/>
+          <span class="required">First Name</span>
+        </label>
+      </div>
+      <div class="form-column">
+        <label class="label-email">
+          <input type="text" class="text" name="First Name" placeholder="Last Name"  [(ngModel)]="prenom" required/>
+          <span class="required">Last Name</span>
+        </label>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-column">
+        <label class="label-email">
+          <input type="email" class="text" name="email" placeholder="Email" [(ngModel)]="email" required/>
+          <span class="required">Email</span>
+        </label>
+      </div>
+      <div class="form-column">
+        <label class="label-password">
+          <input type="text" class="text" name="password" placeholder="Password" tabindex="2"  [(ngModel)]="password"  required />
+          <span class="required">Password</span>
+        </label>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-column">
+        <label class="label-password">
+          <input type="text" class="text" name="password" placeholder="Confirm Password" tabindex="2"  [(ngModel)]="confirmPassword" required />
+          <span class="required">Confirm Password</span>
+        </label>
+  
+      </div>
+      <div class="form-column">
+        <input type="submit" value="Sign In" />
+  
+  
+      </div>
+  
+    </div>
+  
+  
+    <figure aria-hidden="true">
+      <div class="person-body"></div>
+      <div class="neck skin"></div>
+      <div class="head skin">
+        <div class="eyes"></div>
+        <div class="mouth"></div>
+      </div>
+      <div class="hair"></div>
+      <div class="ears"></div>
+      <div class="shirt-1"></div>
+      <div class="shirt-2"></div>
+    </figure>
+  </form>
+  </body>
