@@ -20,17 +20,14 @@ import java.util.stream.Collectors;
 public class AuthenficationController {
     private final AuthenticationService authenticationService;
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            List<String> errors = bindingResult.getAllErrors().stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .collect(Collectors.toList());
-            return ResponseEntity.badRequest().body(new AuthenticationResponse(null, errors));
-        }
-        Optional<User> existingUser = authenticationService.getByMail(request);
-        if (existingUser.isEmpty()) {
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request)
+    {     Optional<User> existingUser = authenticationService.getByMail(request);
+
+        if(existingUser.isEmpty()) {
+            // L'utilisateur n'existe pas, vous pouvez l'ajouter à la base de données
             return ResponseEntity.ok(authenticationService.register(request));
         } else {
+            // L'utilisateur existe déjà, renvoyez un code de statut 409 Conflict
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
     }
