@@ -29,14 +29,14 @@ export class LoginComponent {
       this.userService.login(userCredentials).subscribe(
         (response: AuthenticationResponse) => {
           localStorage.setItem('token', response.token);
+          this.router.navigate(['/home']);
+
         },
         (error) => {
           if (error.status === 403) {
 
             alert("verifie le mail ou le mdp");
-          } else {
-            
-          }
+          } 
         }
 
       );

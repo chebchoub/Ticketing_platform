@@ -15,29 +15,41 @@ export class RegisterComponent {
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
+  showPassword: boolean = false; // Nouvelle variable pour contrôler l'affichage du mot de passe
 
   register() {
-    const nameRegex = /^[A-Za-z]+$/; // Expression régulière pour vérifier les lettres alphabétiques
-    const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/; // Expression régulière pour vérifier le format de l'email
-
+    const nameRegex = /^[A-Za-z]+$/;
+    const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/; // Au moins 8 caractères, une majuscule, une minuscule, un chiffre, un caractère spécial
+    const commonPasswords = ['password', '123456', 'qwerty']; // Liste de mots de passe courants à éviter
+  
     if (!this.nom.match(nameRegex) || !this.prenom.match(nameRegex)) {
       alert("Le nom et le prénom ne doivent contenir que des lettres.");
-      return; // Arrêter le processus d'inscription si le nom ou le prénom n'est pas valide
+      return;
     }
-
+  
     if (!this.email.match(emailRegex)) {
       alert("Veuillez entrer une adresse email valide.");
-      return; // Arrêter le processus d'inscription si l'email n'est pas valide
+      return;
     }
-
+  
+    if (!passwordRegex.test(this.password)) {
+      alert("Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
+      return;
+    }
+  
+    if (commonPasswords.includes(this.password.toLowerCase())) {
+      alert("Veuillez choisir un mot de passe plus fort.");
+      return;
+    }
+  
     const newUser: User = {
       nom: this.nom,
       prenom: this.prenom,
       email: this.email,
       password: this.password
     };
-    
-
+  
     if (!this.nom || !this.prenom || !this.email || !this.password || !this.confirmPassword) {
       alert("Veuillez remplir tous les champs.");
     } else if (this.password !== this.confirmPassword) {
@@ -58,4 +70,5 @@ export class RegisterComponent {
       );
     }
   }
+  
 }

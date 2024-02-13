@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Document(collection = "User")
+@Document(collection = "users")
 public class User implements UserDetails {
     @Id
     private String _id;

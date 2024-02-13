@@ -9,7 +9,7 @@ html, body {
   justify-content: center;
   margin: 0;
   padding: 0;
-  height: 657px;
+  height: 740px;
 
 }
 
@@ -91,6 +91,12 @@ label > span.required::after {
   color: #dd6666;
   margin-left: 0.125rem;
 }
+label > span.password::after {
+  content: "* (0..9,a..z,A..Z,&%)";
+  color: #dd6666;
+  margin-left: 0.125rem;
+}
+
 
 label input {
   order: 2;
