@@ -66,7 +66,21 @@
 			<artifactId>validation-api</artifactId>
 			<version>2.0.1.Final</version> <!-- Version spécifique -->
 		</dependency>
+		<!-- Dépendance pour JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
 
+		<!-- Dépendance pour Mockito -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>3.12.4</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

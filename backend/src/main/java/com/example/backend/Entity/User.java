@@ -27,6 +27,10 @@ public class User implements UserDetails {
         this.password = password;
         this.role=role;
     }
+    public User()
+    {
+
+    }
 
 
     public String get_id() {

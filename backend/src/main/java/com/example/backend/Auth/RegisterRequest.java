@@ -15,5 +15,13 @@ public class RegisterRequest {
     private String prenom;
     private String email;
     private String password;
+
     private Role role;
+
+    public RegisterRequest(String nom, String prenom, String email, String password) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.password = password;
+    }
 }

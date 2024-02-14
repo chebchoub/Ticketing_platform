@@ -49,11 +49,11 @@ public class JwtService {
 
     }
 
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         return  extractExpiration(token).before(new  Date());
     }
 
-    private Date extractExpiration(String token) {
+    public Date extractExpiration(String token) {
         return extractClaim(token,Claims::getExpiration);
     }
 
@@ -66,7 +66,7 @@ public class JwtService {
                 .getBody();
     }
 
-    private Key getSignInKey() {
+    public Key getSignInKey() {
         byte[] ketBytes= Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(ketBytes);
     }

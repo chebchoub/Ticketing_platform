@@ -22,12 +22,9 @@ public class AuthenticationService {
   private final AuthenticationManager authenticationManager;
     public AuthenticationResponse register(RegisterRequest request) {
         User user = new User(request.getNom(),request.getPrenom(), request.getEmail(), passwordEncoder.encode(request.getPassword()),Role.USER);
-
             userRepository.save(user);
             var jwtToken=jwtService.generateToken(user);
             return AuthenticationResponse.builder().token(jwtToken).build();
-
-
     }
 
     public Optional<User> getByMail(RegisterRequest request)
@@ -36,10 +33,12 @@ public class AuthenticationService {
     }
     public AuthenticationResponse authenticate(authenticationRequest request) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword())
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
-          var user=userRepository.findByEmail(request.getEmail()).orElseThrow();
-        var jwtToken=jwtService.generateToken(user);
+        var user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(IllegalArgumentException::new);
+        var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
+
 }
