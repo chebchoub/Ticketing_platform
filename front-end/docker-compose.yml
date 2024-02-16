@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  angular-service: # name of the service
+    container_name: frontend
+    build: ./
+    volumes: # volume binding
+      - "./:/src/app"
+    ports: # ports configuration
+      - "4201:4200"
+    command: >
+      bash -c "npm start"

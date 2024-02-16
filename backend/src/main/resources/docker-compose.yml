@@ -1,0 +1,14 @@
+version: "5"
+services:
+  mongo:
+    image: mongo:latest
+    container_name: "mongo"
+    ports:
+      - 27017:27017
+  backend:
+    image: backend:latest
+    container_name: "backend"
+    ports:
+      - 9090:8080
+    links:
+      - mongo
