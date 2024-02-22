@@ -7,15 +7,18 @@ spec:
     - name: SPRING_BOOT_IMAGE
       description: Image description for Spring Boot
       type: string
-      default: "docker.io/alichabchoub/backend:0.0.2"
+      default: "docker.io/alichabchoub/backend"
     - name: ANGULAR_IMAGE
       description: Image description for Angular
       type: string
-      default: "docker.io/alichabchoub/angular-app:0.0.3"
+      default: "docker.io/alichabchoub/angular-app"
     - name: MONGODB_IMAGE
       description: Image description for MongoDB
       type: string
-      default: "docker.io/alichabchoub/mongo:4.4.7"
+      default: "docker.io/alichabchoub/mongo"
+    - name: TAG
+      description: Preferred tag
+      default: latest  
   workspaces:
     - name: linked-workspace
     - name: backend-source
@@ -60,7 +63,7 @@ spec:
           workspace: frontend-source
       params:
         - name: url
-          value: https://github.com/aymenZargouni/Ticketing_platform.git
+          value: https://github.com/chebchoub/Ticketing_platform.git
         - name: subdirectory
           value: "front-end"  # Adjusted to point to the frontend folder
         - name: deleteExisting
@@ -88,7 +91,7 @@ spec:
       params:
         - name: script
           value: |
-            kubectl apply -f https://github.com/aymenZargouni/Ticketing_platform.git/master/manifest/MongoDB-deployment.yaml
+            kubectl apply -f https://github.com/chebchoub/Ticketing_platform.git/master/manifest/MongoDB-deployment.yaml
       workspaces:
         - name: mongo-manifest-dir
           workspace: mongo-manifest-dir
@@ -101,8 +104,8 @@ spec:
       params:
         - name: script
           value: |
-            kubectl apply -f  https://github.com/aymenZargouni/Ticketing_platform.git/master/manifest/backend-deployment.yaml
-            kubectl apply -f  https://github.com/aymenZargouni/Ticketing_platform.git/master/manifest/frontend-deployment.yaml
+            kubectl apply -f  https://github.com/chebchoub/Ticketing_platform.git/master/manifest/backend-deployment.yaml
+            kubectl apply -f  https://github.com/chebchoub/Ticketing_platform.git/master/manifest/frontend-deployment.yaml
       workspaces:
         - name: manifest-dir
           workspace: linked-workspace
