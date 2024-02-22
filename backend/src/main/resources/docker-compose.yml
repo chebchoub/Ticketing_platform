@@ -1,14 +1,23 @@
-version: "5"
+version: "3.8"
 services:
   mongo:
-    image: mongo:latest
+    image: mongo:4.4.7
     container_name: "mongo"
     ports:
       - 27017:27017
   backend:
-    image: backend:latest
+    image: backend:0.0.2
     container_name: "backend"
     ports:
-      - 9090:8080
+      - 8080:8080
     links:
       - mongo
+  frontend:
+    image: angular-app:0.0.3
+    container_name: frontend
+    build:
+      context: ./front-end
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend

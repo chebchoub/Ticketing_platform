@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/user';
 import { UserServiceService } from 'src/app/user-service.service';
@@ -8,14 +8,19 @@ import { UserServiceService } from 'src/app/user-service.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
   constructor(private userService: UserServiceService, private router: Router) { }
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+    console.log(this.userService.baseUrl)
+  }
   nom: string = '';
   prenom: string = '';
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
   showPassword: boolean = false; // Nouvelle variable pour contrôler l'affichage du mot de passe
+
 
   register() {
     const nameRegex = /^[A-Za-z]+$/;

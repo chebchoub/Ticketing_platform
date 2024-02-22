@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = "http://192.168.59.102:31000")
 public class AuthenficationController {
     private final AuthenticationService authenticationService;
     @PostMapping("/register")

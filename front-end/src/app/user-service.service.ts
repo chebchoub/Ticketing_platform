@@ -4,13 +4,15 @@ import { User } from './user';
 import { AuthenticationResponse } from './authentication-response';
 import { Observable } from 'rxjs';
 import { AuthenticationRequest } from './authentication-request';
+import { environment } from '../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserServiceService {
 
 
-  private baseUrl = 'http://localhost:8080/api/v1/auth';
+  public baseUrl =  environment.apiUrl+'api/v1/auth';
 
   constructor(private http: HttpClient) {}
 
