@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: alichabchoub/angular-app:0.0.3
+        image: alichabchoub/angular-app:latest
         ports:
         - containerPort: 80
 ---
