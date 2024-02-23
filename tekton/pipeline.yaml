@@ -1,0 +1,60 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: spring-boot-pipeline
+spec:
+  params:
+    - name: SPRING_BOOT_IMAGE
+      description: Image for Spring Boot
+      type: string
+      default: "alichabchoub/backend"
+    - name: TAG
+      description: Preferred tag
+      default: latest
+  workspaces:
+    - name: shared-workspace
+  tasks:
+    - name: fetch-spring-boot
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+      params:
+        - name: url
+          value: https://github.com/chebchoub/Ticketing_platform.git
+        - name: revision
+          value: master  # Specify the branch to clone, if necessary
+        - name: subdirectory
+          value: "backend"  # Adjusted to point to the Spring Boot app's backend folder
+        - name: deleteExisting
+          value: "true"
+    - name: build-spring-boot
+      taskRef:
+        name: buildah
+      runAfter:
+        - fetch-spring-boot
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+      params:
+        - name: IMAGE
+          value: "$(params.SPRING_BOOT_IMAGE):$(params.TAG)"
+        - name: CONTEXT
+          value: "https://github.com/chebchoub/Ticketing_platform.git/backend" 
+        - name: revision
+          value: master  # Specify the branch to clone, if necessary  
+        - name: FORMAT
+          value: "docker"
+    - name: create-deployment 
+      taskRef:
+        name: kubernetes-actions
+      runAfter:
+        - build-spring-boot
+      params:
+        - name: script
+          value: |
+            kubectl apply --filename https://github.com/chebchoub/Ticketing_platform/blob/master/manifest/backend-deployment.yaml
+      workspaces:
+        - name: manifest-dir
+          workspace: shared-workspace

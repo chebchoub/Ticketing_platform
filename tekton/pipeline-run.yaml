@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: springboot-pipelinerun-1
+spec:
+  pipelineRef:
+    name: spring-boot-pipeline
+  params:
+    - name: SPRING_BOOT_IMAGE
+      value: "alichabchoub/backend"
+    - name: TAG
+      value: latest
+  workspaces:
+    - name: shared-workspace
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 10G
