@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm ci
+RUN npm install
 RUN npm run build --prod
 
 # Étape de construction de l'image Nginx
