@@ -68,6 +68,8 @@ spec:
       params:
         - name: script
           value: |
+            kubectl delete deployment frontend
+            kubectl delete service frontend-service
             kubectl apply --filename https://raw.githubusercontent.com/chebchoub/Ticketing_platform/master/manifest/frontend-deployment.yaml
       workspaces:
         - name: manifest-dir
