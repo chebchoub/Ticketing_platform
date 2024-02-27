@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-frontend-task
+spec:
+  workspaces:
+    - name: source
+  steps:
+    - name: npm-build
+      image: node:latest
+      command:
+        - sh
+        - -c
+      args:
+        - |
+          cd $(workspaces.source.path)/front-end
+          npm run build --prod

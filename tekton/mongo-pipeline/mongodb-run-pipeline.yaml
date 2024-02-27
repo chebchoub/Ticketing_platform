@@ -1,0 +1,8 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: mongo-pipelinerun-1
+spec:
+  serviceAccountName: docker-login
+  pipelineRef:
+    name: mongo-pipeline

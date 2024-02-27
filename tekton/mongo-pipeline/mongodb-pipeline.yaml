@@ -1,0 +1,13 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: mongo-pipeline
+spec:
+  tasks:
+    - name: create-deployment-mongo
+      taskRef:
+        name: kubernetes-actions
+      params:
+        - name: script
+          value: |
+            kubectl apply --filename https://raw.githubusercontent.com/chebchoub/Ticketing_platform/master/manifest/MongoDB-deployment.yaml

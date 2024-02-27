@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: npm-install
+spec:
+  workspaces:
+    - name: source
+  steps:
+    - name: npm-install
+      image: node:latest
+      command:
+        - sh
+        - -c
+      args:
+        - |
+          cd $(workspaces.source.path)/front-end
+          npm install

@@ -26,14 +26,28 @@ spec:
         - name: revision
           value: master  # Specify the branch to clone, if necessary
         - name: subdirectory
-          value: "backend"  # Adjusted to point to the Spring Boot app's backend folder
+          value: ""  # Adjusted to point to the Spring Boot app's backend folder
         - name: deleteExisting
           value: "true"
+    - name: build-spring-boot-jar
+      runAfter:
+        - fetch-spring-boot  # Assuming this is the step where your repo is cloned
+      taskSpec:
+        steps:
+          - name: mvn-package
+            image: maven:3.8.4-openjdk-17  # Use the appropriate Maven and JDK version
+            script: |
+              #!/bin/bash
+              cd /workspace/output/backend  
+              mvn clean package  
+      workspaces:
+        - name: output
+          workspace: shared-workspace
     - name: build-spring-boot
       taskRef:
         name: buildah
       runAfter:
-        - fetch-spring-boot
+        - build-spring-boot-jar
       workspaces:
         - name: source
           workspace: shared-workspace
@@ -41,12 +55,10 @@ spec:
         - name: IMAGE
           value: "$(params.SPRING_BOOT_IMAGE):$(params.TAG)"
         - name: CONTEXT
-          value: "https://github.com/chebchoub/Ticketing_platform.git/backend" 
-        - name: revision
-          value: master  # Specify the branch to clone, if necessary  
+          value: "backend" 
         - name: FORMAT
           value: "docker"
-    - name: create-deployment 
+    - name: create-deployment
       taskRef:
         name: kubernetes-actions
       runAfter:
@@ -54,7 +66,7 @@ spec:
       params:
         - name: script
           value: |
-            kubectl apply --filename https://github.com/chebchoub/Ticketing_platform/blob/master/manifest/backend-deployment.yaml
+            kubectl apply --filename https://raw.githubusercontent.com/chebchoub/Ticketing_platform/master/manifest/backend-deployment.yaml
       workspaces:
         - name: manifest-dir
           workspace: shared-workspace

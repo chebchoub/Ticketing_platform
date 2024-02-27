@@ -13,10 +13,10 @@ spec:
         app: frontend
     spec:
       containers:
-      - name: frontend
-        image: alichabchoub/angular-app:0.0.3
-        ports:
-        - containerPort: 80
+        - name: frontend
+          image: alichabchoub/angular-app:latest
+          ports:
+            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -26,9 +26,8 @@ spec:
   selector:
     app: frontend
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
-    nodePort: 31000
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 31000
   type: NodePort
-      

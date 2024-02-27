@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: alichabchoub/backend:0.0.2
+        image: alichabchoub/backend:latest
         ports:
         - containerPort: 8080
 ---

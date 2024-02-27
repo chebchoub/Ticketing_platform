@@ -1,0 +1,74 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: frontend-pipeline
+spec:
+  params:
+    - name: FRONTEND_IMAGE
+      description: Image for the frontend application
+      type: string
+      default: "alichabchoub/angular-app"
+    - name: TAG
+      description: Preferred tag
+      default: latest
+  workspaces:
+    - name: shared-workspace
+  tasks:
+    - name: fetch-frontend
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+      params:
+        - name: url
+          value: https://github.com/chebchoub/Ticketing_platform.git
+        - name: revision
+          value: master
+        - name: subdirectory
+          value: ""  # Adjust if your frontend code is in a specific directory
+        - name: deleteExisting
+          value: "true"  
+    - name: npm-install
+      taskRef:
+        name: npm-install
+      runAfter:
+        - fetch-frontend
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+    - name: build-frontend
+      taskRef:
+        name: build-frontend-task
+      runAfter:
+        - npm-install
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+    - name: contenraise-frontend
+      taskRef:
+        name: buildah
+      runAfter:
+        - build-frontend
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+      params:
+        - name: IMAGE
+          value: "$(params.FRONTEND_IMAGE):$(params.TAG)"
+        - name: CONTEXT
+          value: "front-end" 
+        - name: FORMAT
+          value: "docker"      
+    - name: deploy-frontend
+      taskRef:
+        name: kubernetes-actions
+      runAfter:
+        - contenraise-frontend
+      params:
+        - name: script
+          value: |
+            kubectl apply --filename https://raw.githubusercontent.com/chebchoub/Ticketing_platform/master/manifest/frontend-deployment.yaml
+      workspaces:
+        - name: manifest-dir
+          workspace: shared-workspace

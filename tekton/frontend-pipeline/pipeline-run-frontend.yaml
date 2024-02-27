@@ -1,13 +1,14 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: springboot-pipelinerun-1
+  name: frontend-pipelinerun-1
 spec:
+  serviceAccountName: docker-login
   pipelineRef:
-    name: spring-boot-pipeline
+    name: frontend-pipeline
   params:
-    - name: SPRING_BOOT_IMAGE
-      value: "alichabchoub/backend"
+    - name:  FRONTEND_IMAGE
+      value: "alichabchoub/angular-app"
     - name: TAG
       value: latest
   workspaces:
