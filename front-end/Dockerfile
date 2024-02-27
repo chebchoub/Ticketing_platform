@@ -1,12 +1,3 @@
-# Étape de construction de l'application Angular
-FROM node:latest as builder
-
-WORKDIR /app
-
-COPY . .
-
-RUN npm run build --prod
-
 # Étape de construction de l'image Nginx
 FROM nginx:alpine
 
