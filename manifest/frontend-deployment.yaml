@@ -13,10 +13,17 @@ spec:
         app: frontend
     spec:
       containers:
+<<<<<<< HEAD
         - name: frontend
           image: alichabchoub/angular-app:latest
           ports:
             - containerPort: 80
+=======
+      - name: frontend
+        image: alichabchoub/angular-app:latest
+        ports:
+        - containerPort: 80
+>>>>>>> 3e9e8fdee4e15b5764e4598a6fd6a6cda528e0a8
 ---
 apiVersion: v1
 kind: Service
@@ -31,3 +38,7 @@ spec:
       targetPort: 80
       nodePort: 31000
   type: NodePort
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 3e9e8fdee4e15b5764e4598a6fd6a6cda528e0a8
