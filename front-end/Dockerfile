@@ -5,7 +5,6 @@ WORKDIR /app
 
 COPY . .
 
-
 # Étape de construction de l'image Nginx
 FROM nginx:alpine
 
