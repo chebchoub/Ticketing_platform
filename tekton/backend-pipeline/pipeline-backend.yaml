@@ -66,6 +66,8 @@ spec:
       params:
         - name: script
           value: |
+            kubectl delete deployment backend
+            kubectl delete service backend
             kubectl apply --filename https://raw.githubusercontent.com/chebchoub/Ticketing_platform/master/manifest/backend-deployment.yaml
       workspaces:
         - name: manifest-dir
