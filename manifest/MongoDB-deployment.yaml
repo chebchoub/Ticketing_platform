@@ -17,24 +17,13 @@ spec:
         persistentVolumeClaim:
           claimName: mongo-pvc
       containers:
-      - name: mongo
-        image: alichabchoub/mongo:4.4.7
-        ports:
-        - containerPort: 27017
-        volumeMounts:
-          - mountPath: /data/db
-            name: mongo-storage
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mongo-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
+        - name: mongo
+          image: alichabchoub/mongo:4.4.7
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - mountPath: /data/db
+              name: mongo-storage
 ---
 apiVersion: v1
 kind: Service
