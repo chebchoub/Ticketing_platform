@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongo
+  name: mongodb
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mongo
+      app: mongodb
   template:
     metadata:
       labels:
-        app: mongo
+        app: mongodb
     spec:
       volumes:
       - name: mongo-storage
         persistentVolumeClaim:
           claimName: mongo-pvc
       containers:
-        - name: mongo
+        - name: mongodb
           image: alichabchoub/mongo:4.4.7
           ports:
             - containerPort: 27017
@@ -26,13 +26,25 @@ spec:
               name: mongo-storage
 ---
 apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
 kind: Service
 metadata:
-  name: mongo
+  name: mongodb
 spec:
   ports:
     - port: 27017
       targetPort: 27017
-      nodePort: 30003  # Correction du champ nodePort
+      nodePort: 30003
   type: NodePort
-
+  selector:
+    app: mongodb
