@@ -12,29 +12,39 @@ spec:
       labels:
         app: mongodb
     spec:
-      containers:
-      - name: mongodb
-        image: alichabchoub/mongo:4.4.7
-        ports:
-        - containerPort: 27017
-        volumeMounts:
-        - name: mongodb-data
-          mountPath: /data/db
       volumes:
-      - name: mongodb-data
+      - name: mongo-storage
         persistentVolumeClaim:
-          claimName: mongodb-pvc        
+          claimName: mongo-pvc
+      containers:
+        - name: mongodb
+          image: alichabchoub/mongo:4.4.7
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - mountPath: /data/db
+              name: mongo-storage
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongo
+  name: mongodb
 spec:
-  selector:
-    app: mongo
   ports:
-    - protocol: TCP
-      port: 27017
+    - port: 27017
       targetPort: 27017
-      nodePort: 30003
+      nodePort: 30007
   type: NodePort
+  selector:
+    app: mongodb
