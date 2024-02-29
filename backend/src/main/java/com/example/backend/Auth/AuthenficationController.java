@@ -31,7 +31,7 @@ public class AuthenficationController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
     }
-    @PostMapping("/auth")
+    @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authentificate(@RequestBody authenticationRequest request)
     {
         return ResponseEntity.ok(authenticationService.authenticate(request));
