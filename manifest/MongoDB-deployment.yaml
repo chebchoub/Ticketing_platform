@@ -33,6 +33,6 @@ spec:
   ports:
     - port: 27017
       targetPort: 27017
-      nodePort: 30007  # Correction du champ nodePort
+      nodePort: 30003  # Correction du champ nodePort
   type: NodePort
 
